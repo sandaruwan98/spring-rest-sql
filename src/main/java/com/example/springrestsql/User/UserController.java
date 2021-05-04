@@ -26,6 +26,10 @@ public class UserController {
         userService.deleteUser(id);
     }
 
+    @PutMapping(path = "{id}")
+    public void updateUser(@PathVariable Integer id,@RequestParam(required = false) String name,@RequestParam(required = false) String email ){
+        userService.updateUser(id, name, email);
+    }
 
 
 }
