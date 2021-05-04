@@ -17,9 +17,15 @@ public class UserController {
     }
 
     @PostMapping
-    public void addUser(@RequestBody User user){
+    public void registerUser(@RequestBody User user){
         userService.addUser(user);
     }
+
+    @DeleteMapping(path = "{id}")
+    public void deleteUser(@PathVariable("id") Integer id){
+        userService.deleteUser(id);
+    }
+
 
 
 }
