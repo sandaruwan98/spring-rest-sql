@@ -56,4 +56,10 @@ public class UserService {
     }
 
 
+    public Optional<User> getUser(Integer id) {
+        if (!userRepository.existsById(id)){
+            throw new IllegalStateException("Invalid id,there is no user with id -"+ id);
+        }
+        return userRepository.findById(id);
+    }
 }
