@@ -3,7 +3,9 @@ package com.example.springrestsql.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -33,7 +35,23 @@ public class UserService {
         }
     }
 
-    public void updateUser(Integer id) {
+    @Transactional
+    public void updateUser(Integer id,String name,String email) {
+        User user = userRepository.findById(id).orElseThrow(
+                ()-> new IllegalStateException("Invalid Id")
+        );
+
+        if (name != null && name.length() > 0 && !Objects.equals(name,user.getName() ) ){
+            user.setName(name);
+        }
+
+        if (email != null && email.length() > 0 && !Objects.equals(email,user.getEmail() ) ){
+            if (!userRepository.findUserByEmail(email).isPresent()){
+                user.setEmail(email);
+            }else {
+                throw new IllegalStateException("email is taken");
+            }
+        }
 
     }
 
